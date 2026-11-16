@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kids World Educational Game</string>
+    <string name="tagline">Play, Learn, and Collect Golden Stars</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="search_games_hint">Search games like ABC, Berry, Music...</string>
+    <string name="parent_pin_hint">Enter 4-digit Parent PIN (default 1234)</string>
+</resources>

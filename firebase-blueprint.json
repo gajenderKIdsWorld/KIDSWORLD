@@ -1,0 +1,190 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Learner profile, XP, level, total stars, and parent-controlled preferences for Pastel Playland.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the signed-in family/educator account."
+        },
+        "learnerName": {
+          "type": "string",
+          "description": "Child's display nickname shown in the Playland hub."
+        },
+        "avatarId": {
+          "type": "string",
+          "enum": ["star", "berry", "cloud", "bunny"],
+          "description": "Selected pastel character avatar identifier."
+        },
+        "xp": {
+          "type": "integer",
+          "description": "Accumulated experience points toward the Star Progress Meter."
+        },
+        "level": {
+          "type": "integer",
+          "description": "Current learner level derived from XP."
+        },
+        "totalStars": {
+          "type": "integer",
+          "description": "Sum of stars earned across Playland mini-games."
+        },
+        "soundEnabled": {
+          "type": "boolean",
+          "description": "Whether tactile audio chimes and spoken phonics cues are enabled."
+        },
+        "dailyTimerEnabled": {
+          "type": "boolean",
+          "description": "Whether the parent-configured daily play timer is active."
+        },
+        "dailyLimitMinutes": {
+          "type": "integer",
+          "description": "Daily play limit in minutes (10 to 120)."
+        },
+        "parentPin": {
+          "type": "string",
+          "description": "4-digit PIN code protecting the Parent & Educator Corner."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on each update."
+        }
+      },
+      "required": [
+        "userId",
+        "learnerName",
+        "avatarId",
+        "xp",
+        "level",
+        "totalStars",
+        "soundEnabled",
+        "dailyTimerEnabled",
+        "dailyLimitMinutes",
+        "parentPin",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GameProgress": {
+      "title": "GameProgress",
+      "description": "Per-game star rating (0-3), high score, and completion stats for a learner.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID."
+        },
+        "gameId": {
+          "type": "string",
+          "enum": ["phonics", "counting", "shapes", "music"],
+          "description": "Mini-game identifier."
+        },
+        "stars": {
+          "type": "integer",
+          "description": "Highest star rating earned (0 to 3)."
+        },
+        "bestScore": {
+          "type": "integer",
+          "description": "Highest score achieved in this mini-game."
+        },
+        "playsCount": {
+          "type": "integer",
+          "description": "Total completed play sessions."
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "True when at least 1 star has been earned."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on update."
+        }
+      },
+      "required": [
+        "userId",
+        "gameId",
+        "stars",
+        "bestScore",
+        "playsCount",
+        "completed",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StickerReward": {
+      "title": "StickerReward",
+      "description": "Unlocked collectible sticker reward in the learner's Sticker Book.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID."
+        },
+        "stickerId": {
+          "type": "string",
+          "description": "Unique sticker identifier matching the document ID."
+        },
+        "title": {
+          "type": "string",
+          "description": "Playful title of the unlocked sticker."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["phonics", "counting", "shapes", "music", "milestone"],
+          "description": "Learning category associated with the sticker."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on unlock."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on update."
+        }
+      },
+      "required": [
+        "userId",
+        "stickerId",
+        "title",
+        "category",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Stores the learner profile, star totals, XP, and parent settings for the authenticated user."
+    },
+    "/users/{userId}/gameProgress/{gameId}": {
+      "schema": {
+        "$ref": "#/entities/GameProgress"
+      },
+      "description": "Stores per-game 3-star progress and best scores under the user's subcollection."
+    },
+    "/users/{userId}/stickers/{stickerId}": {
+      "schema": {
+        "$ref": "#/entities/StickerReward"
+      },
+      "description": "Stores unlocked collectible stickers under the user's subcollection."
+    }
+  }
+}

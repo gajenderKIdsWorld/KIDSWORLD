@@ -1,0 +1,210 @@
+---
+name: Pastel Playland
+colors:
+  surface: '#f4faff'
+  surface-dim: '#d2dbe1'
+  surface-bright: '#f4faff'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#ecf5fb'
+  surface-container: '#e6eff5'
+  surface-container-high: '#e0e9ef'
+  surface-container-highest: '#dbe4ea'
+  on-surface: '#141d21'
+  on-surface-variant: '#3e484f'
+  inverse-surface: '#293236'
+  inverse-on-surface: '#e9f2f8'
+  outline: '#6e7980'
+  outline-variant: '#bdc8d1'
+  surface-tint: '#00668a'
+  primary: '#00668a'
+  on-primary: '#ffffff'
+  primary-container: '#38bdf8'
+  on-primary-container: '#004965'
+  inverse-primary: '#7bd0ff'
+  secondary: '#a93349'
+  on-secondary: '#ffffff'
+  secondary-container: '#fe7488'
+  on-secondary-container: '#730425'
+  tertiary: '#795900'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#e1a800'
+  on-tertiary-container: '#584000'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#c4e7ff'
+  primary-fixed-dim: '#7bd0ff'
+  on-primary-fixed: '#001e2c'
+  on-primary-fixed-variant: '#004c69'
+  secondary-fixed: '#ffdadc'
+  secondary-fixed-dim: '#ffb2b9'
+  on-secondary-fixed: '#400010'
+  on-secondary-fixed-variant: '#891933'
+  tertiary-fixed: '#ffdf9f'
+  tertiary-fixed-dim: '#f9bd22'
+  on-tertiary-fixed: '#261a00'
+  on-tertiary-fixed-variant: '#5c4300'
+  background: '#f4faff'
+  on-background: '#141d21'
+  surface-variant: '#dbe4ea'
+typography:
+  display-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 48px
+    fontWeight: '800'
+    lineHeight: 56px
+    letterSpacing: -0.02em
+  display-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 36px
+    fontWeight: '800'
+    lineHeight: 44px
+    letterSpacing: -0.01em
+  headline-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 32px
+    fontWeight: '700'
+    lineHeight: 40px
+  headline-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 24px
+    fontWeight: '700'
+    lineHeight: 32px
+  headline-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 20px
+    fontWeight: '700'
+    lineHeight: 28px
+  body-lg:
+    fontFamily: Nunito Sans
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 30px
+  body-md:
+    fontFamily: Nunito Sans
+    fontSize: 18px
+    fontWeight: '600'
+    lineHeight: 26px
+  body-sm:
+    fontFamily: Nunito Sans
+    fontSize: 16px
+    fontWeight: '600'
+    lineHeight: 22px
+  label-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 18px
+    fontWeight: '800'
+    lineHeight: 24px
+    letterSpacing: 0.02em
+  label-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 16px
+    fontWeight: '700'
+    lineHeight: 20px
+  label-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 14px
+    fontWeight: '700'
+    lineHeight: 18px
+rounded:
+  sm: 0.5rem
+  DEFAULT: 1rem
+  md: 1.5rem
+  lg: 2rem
+  xl: 3rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-desktop: 2rem
+  margin: 1.5rem
+  margin-tablet: 2rem
+  margin-desktop: 3rem
+  space-xs: 0.5rem
+  space-sm: 0.75rem
+  space-md: 1.25rem
+  space-lg: 2rem
+  space-xl: 3rem
+---
+
+## Brand & Style
+
+This design system expresses a cheerful, imaginative, and deeply encouraging play-and-learn world tailored for early learners (ages 3–8) and their parents/educators on Windows desktop and tablet touchscreens. 
+
+The aesthetic is **Tactile Soft-Cartoon / Pillowy Bubble**:
+- **Character & Emotion:** Joyous, welcoming, safe, and celebratory. Every interaction feels like pressing a soft bouncy toy or collecting a sweet treat.
+- **Physical Metaphor:** Rounded squishy surfaces, layered floating clouds, chunky candy-coated action buttons with thick glossy highlights, and glowing golden star rewards.
+- **Child-First Accessibility:** Oversized touch targets (minimum 64px on interactive controls), high visual contrast, intuitive color-coded navigation icons, and zero harsh angles or intimidating corporate layouts.
+- **Visual Rhythm:** Playfully rhythmic, friendly, and non-cluttered. It embraces soft dimensional depth rather than flat utility, celebrating victories with popping particles and bouncy transitions.
+
+## Colors
+
+The color palette is anchored in an uplifting sky pastel canvas with bright candy accents:
+
+- **Primary (`#38BDF8` - Sky Pastel Blue):** The primary brand anchor representing clear blue skies, safety, and open space. Used for header bars, primary navigation tabs, and default interactive frames.
+- **Secondary (`#FB7185` - Strawberry Pink):** A high-energy, warm accent dedicated to immediate actions, high-priority buttons (e.g., "Play Now", "Start Game"), and celebratory elements.
+- **Tertiary (`#FBBF24` - Sunny Honey / Star Gold):** The reward and celebration token. Applied to XP bars, achievements, star ratings, and celebratory badges.
+- **Supporting Accents:**
+  - **Emerald Mint (`#34D399`):** Indicates success, complete modules, and positive feedback loops.
+  - **Sunny Orange (`#FB923C`):** Denotes creative crafts, puzzles, and secondary action calls.
+  - **Lavender Dream (`#A78BFA`):** Used for storytelling, music, and quiet exploration modes.
+- **Neutral Canvas (`#F0F9FF` - Cotton Cloud Blue):** The soft tinted-white foundation that eliminates eye strain while maintaining the illusion of floating above clouds. Text uses deep comforting slate-navy (`#0F172A`) to ensure WCAG AAA legibility for early readers.
+
+## Typography
+
+Typography prioritizes extreme legibility, open counters, rounded geometry, and a friendly, bouncy demeanor:
+
+- **Headlines & Display:** Set in **Plus Jakarta Sans** with heavy weights (700 Bold, 800 ExtraBold). Its friendly geometric curves evoke soft building blocks, making title banners cheerful and effortlessly legible from tablet arm's-length.
+- **Body & Prompts:** Set in **Nunito Sans** (weights 600 SemiBold and 700 Bold). The naturally rounded terminals provide a warm, approachable character that guides early readers without visual harshness or visual fatigue.
+- **Labels & Micro-copy:** Kept uppercase or heavy-weight title case with generous line heights and tracking to ensure comfortable reading for children developing phonics and sight-reading comprehension.
+
+## Layout & Spacing
+
+Designed for fluid responsiveness across Windows tablet touch devices (10"-12") and large family desktop monitors (1080p, 1440p, 4K):
+
+- **Grid Architecture:** 12-column responsive fluid grid bounded within a maximum content container of 1600px, centering gameplay canvases cleanly with cloud-filled decorative margins on ultra-wide screens.
+- **Tactile Spacing Philosophy:** Generous spacing rules ensure children do not accidentally trigger adjacent buttons. Layout gaps between interactive cards never shrink below `1.25rem` (`space-md`).
+- **Touch Areas & Ergonomics:** Bottom and side edges of the screen prioritize primary interaction zones to support two-handed tablet grips. Navigation rails dock to the left or bottom with chunky 64px–80px touch zones.
+
+## Elevation & Depth
+
+Visual hierarchy uses a cheerful **Layered Cartoon Depth & Soft Skeuomorphism** model instead of sterile realistic dropshadows:
+
+- **Surface Tiers:**
+  - **Base Layer (Sky Canvas):** Soft, soothing gradient from `#E0F2FE` down to `#BAE6FD` featuring organic vector cloud silhouettes.
+  - **Surface Container (Cloud Panels):** Pure opaque cloud-white (`#FFFFFF`) with thick bottom bevels (`0 8px 0 rgba(14, 165, 233, 0.15)`), giving panels the feel of solid foam play mats.
+  - **Elevated Controls (Buttons & Tokens):** 3D squishy buttons featuring double-layer drops: a bottom edge base (4px to 6px solid darker tint matching the element's hue) paired with a diffused ambient glow (`0 12px 24px -6px rgba(0, 0, 0, 0.08)`).
+- **Active State Depth:** On touch or click, buttons physically depress by 4px (`transform: translateY(4px)`), collapsing their bottom edge base and providing instantaneous physical satisfaction.
+
+## Shapes
+
+The shape system adopts full pill-shaped and bubble curvature:
+- **Level 3 (Pill-shaped):** Extreme organic roundness across all interactive containers, progress capsules, and cards. 
+- Standard chips and small buttons carry complete pill radii (`9999px` / `1rem+`).
+- Content cards and game portals utilize soft bubble boundaries (`2rem` / `rounded-lg` to `3rem` / `rounded-xl`).
+- Hard 90-degree corners are completely avoided across the application to reinforce a gentle, touch-inviting, child-safe environment.
+
+## Components
+
+- **Chunky Bubble Buttons:**
+  - Oversized (minimum height: 60px; large action: 76px) with bold white text and subtle interior top-gloss highlights (`linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%)`).
+  - Solid bottom shadow lip of 4px–6px in a darker shade of the button's background hue.
+  - Primary button in Strawberry Pink (`#FB7185`), secondary actions in Emerald Mint (`#34D399`) or Sunny Orange (`#FB923C`).
+
+- **Cloud Game Cards:**
+  - Pure white pillowy containers (`rounded-xl`, 3rem curvature) outlined by an ultra-soft 3px border (`#E0F2FE`) and raised 8px bottom shelf.
+  - Cards feature a rich, high-contrast illustrative banner, bold title label, and a playful 3-star rating tracker.
+
+- **Reward Chips & Tags:**
+  - Capsule-shaped pills (`roundedness: 3`) using bright pastel fills paired with saturated borders.
+  - Accompanied by cheerful 3D iconography (e.g., golden stars, apples, pencils) pinned seamlessly to the left side of the pill.
+
+- **Checkboxes & Toggle Switches:**
+  - Checkboxes are styled as rounded bouncy bubble buttons containing a thick, playful checkmark icon.
+  - Toggles use pill tracks with oversized, round candy handles that squish slightly on sliding.
+
+- **Input Fields (Kid Search & PIN Entry):**
+  - Tall fields (56px–64px) with rounded-lg edges, pale blue interior fill (`#F8FAFC`), thick friendly focus borders (`#38BDF8`), and large, legible numbers/letters.
+
+- **Star Progress Meters:**
+  - Thick, rounded capsule bar containing segmented candy segments with an animated smiling star at the leading edge that bounces as XP fills.

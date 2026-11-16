@@ -1,0 +1,8 @@
+{
+  "name": "Kids World Educational Game",
+  "description": "A cheerful, tactile play-and-learn world for early learners with interactive mini-games, star rewards, and parent controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

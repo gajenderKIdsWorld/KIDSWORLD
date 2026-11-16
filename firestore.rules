@@ -1,0 +1,172 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidUserProfile(data) {
+      return data.userId is string && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.learnerName is string && data.learnerName.size() >= 1 && data.learnerName.size() <= 30 &&
+             data.avatarId in ['star', 'berry', 'cloud', 'bunny'] &&
+             data.xp is int && data.xp >= 0 && data.xp <= 1000000 &&
+             data.level is int && data.level >= 1 && data.level <= 999 &&
+             data.totalStars is int && data.totalStars >= 0 && data.totalStars <= 10000 &&
+             data.soundEnabled is bool &&
+             data.dailyTimerEnabled is bool &&
+             data.dailyLimitMinutes is int && data.dailyLimitMinutes >= 10 && data.dailyLimitMinutes <= 120 &&
+             data.parentPin is string && data.parentPin.size() == 4 && data.parentPin.matches('^[0-9]{4}$');
+    }
+
+    function isValidGameProgress(data) {
+      return data.userId is string && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.gameId in ['phonics', 'counting', 'shapes', 'music'] &&
+             data.stars is int && data.stars >= 0 && data.stars <= 3 &&
+             data.bestScore is int && data.bestScore >= 0 && data.bestScore <= 100000 &&
+             data.playsCount is int && data.playsCount >= 0 && data.playsCount <= 100000 &&
+             data.completed is bool;
+    }
+
+    function isValidSticker(data) {
+      return data.userId is string && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             isValidId(data.stickerId) &&
+             data.title is string && data.title.size() >= 1 && data.title.size() <= 40 &&
+             data.category in ['phonics', 'counting', 'shapes', 'music', 'milestone'];
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       incoming().userId == request.auth.uid &&
+                       incoming().keys().hasAll([
+                         'userId', 'learnerName', 'avatarId', 'xp', 'level',
+                         'totalStars', 'soundEnabled', 'dailyTimerEnabled',
+                         'dailyLimitMinutes', 'parentPin', 'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'learnerName', 'avatarId', 'xp', 'level',
+                         'totalStars', 'soundEnabled', 'dailyTimerEnabled',
+                         'dailyLimitMinutes', 'parentPin', 'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidUserProfile(incoming()) &&
+                       incoming().createdAt is timestamp &&
+                       incoming().createdAt <= request.time &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time;
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidUserProfile(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time &&
+                       (
+                         // Action: Update learner profile (name/avatar)
+                         incoming().diff(existing()).affectedKeys().hasOnly(['learnerName', 'avatarId', 'updatedAt']) ||
+                         // Action: Record XP, level, and total stars earned
+                         incoming().diff(existing()).affectedKeys().hasOnly(['xp', 'level', 'totalStars', 'updatedAt']) ||
+                         // Action: Update parent controls and PIN
+                         incoming().diff(existing()).affectedKeys().hasOnly(['soundEnabled', 'dailyTimerEnabled', 'dailyLimitMinutes', 'parentPin', 'updatedAt'])
+                       );
+
+      allow delete: if isOwner(userId) && isValidId(userId);
+
+      match /gameProgress/{gameId} {
+        allow get: if isOwner(userId) && isValidId(gameId);
+        allow list: if isOwner(userId);
+
+        allow create: if isOwner(userId) &&
+                         isValidId(gameId) &&
+                         incoming().userId == request.auth.uid &&
+                         incoming().gameId == gameId &&
+                         incoming().keys().hasAll([
+                           'userId', 'gameId', 'stars', 'bestScore',
+                           'playsCount', 'completed', 'createdAt', 'updatedAt'
+                         ]) &&
+                         incoming().keys().hasOnly([
+                           'userId', 'gameId', 'stars', 'bestScore',
+                           'playsCount', 'completed', 'createdAt', 'updatedAt'
+                         ]) &&
+                         isValidGameProgress(incoming()) &&
+                         incoming().createdAt is timestamp &&
+                         incoming().createdAt <= request.time &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time;
+
+        allow update: if isOwner(userId) &&
+                         isValidId(gameId) &&
+                         isValidGameProgress(incoming()) &&
+                         incoming().userId == existing().userId &&
+                         incoming().gameId == existing().gameId &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time &&
+                         incoming().diff(existing()).affectedKeys().hasOnly([
+                           'stars', 'bestScore', 'playsCount', 'completed', 'updatedAt'
+                         ]);
+
+        allow delete: if isOwner(userId) && isValidId(gameId);
+      }
+
+      match /stickers/{stickerId} {
+        allow get: if isOwner(userId) && isValidId(stickerId);
+        allow list: if isOwner(userId);
+
+        allow create: if isOwner(userId) &&
+                         isValidId(stickerId) &&
+                         incoming().userId == request.auth.uid &&
+                         incoming().stickerId == stickerId &&
+                         incoming().keys().hasAll([
+                           'userId', 'stickerId', 'title', 'category', 'createdAt', 'updatedAt'
+                         ]) &&
+                         incoming().keys().hasOnly([
+                           'userId', 'stickerId', 'title', 'category', 'createdAt', 'updatedAt'
+                         ]) &&
+                         isValidSticker(incoming()) &&
+                         incoming().createdAt is timestamp &&
+                         incoming().createdAt <= request.time &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time;
+
+        allow update: if isOwner(userId) &&
+                         isValidId(stickerId) &&
+                         isValidSticker(incoming()) &&
+                         incoming().userId == existing().userId &&
+                         incoming().stickerId == existing().stickerId &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time &&
+                         incoming().diff(existing()).affectedKeys().hasOnly([
+                           'title', 'category', 'updatedAt'
+                         ]);
+
+        allow delete: if isOwner(userId) && isValidId(stickerId);
+      }
+    }
+  }
+}
