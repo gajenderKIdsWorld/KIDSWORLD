@@ -1,0 +1,49 @@
+name: Build APK from AI Studio Web App
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Install dependencies & Capacitor
+        run: |
+          npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+
+      - name: Build Web App
+        run: npm run build
+
+      - name: Convert Web App to Android
+        run: |
+          npx cap init "AIStudioApp" "com.aistudio.app" --web-dir=dist
+          npx cap add android
+          npx cap sync
+
+      - name: Build Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-studio-app-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
